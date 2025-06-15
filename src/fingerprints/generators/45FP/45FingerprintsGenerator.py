@@ -39,7 +39,6 @@ df = pd.read_csv('../../matched_cifs_with_energy.csv')
 fingerprints = []
 
 for path in tqdm(df["file_path"]):
-    path = '../../' + path
     try:
         structure = Structure.from_file(path)
         elements = [site.specie for site in structure if isinstance(site.specie, Element)]

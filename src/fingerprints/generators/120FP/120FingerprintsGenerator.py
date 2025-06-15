@@ -79,7 +79,7 @@ rows = []
 ids = []
 
 for i, row in tqdm(df_input.iterrows(), total=len(df_input), desc="Processing CIFs"):
-    cif_path = '../../' + row['file_path']
+    cif_path = row['file_path']
     energy = row['energy']
     try:
         struct = Structure.from_file(cif_path)
@@ -88,7 +88,7 @@ for i, row in tqdm(df_input.iterrows(), total=len(df_input), desc="Processing CI
         chem = get_additional_chem_features(elements)
         fingerprint = elemental + chem + [energy]
         rows.append(fingerprint)
-        ids.append(os.path.basename(cif_path))
+        ids.append(os.path.abspath(cif_path))
     except Exception as e:
         print(f"Error with file: {cif_path}: {e}")
 

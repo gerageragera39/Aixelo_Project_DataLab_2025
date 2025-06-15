@@ -22,7 +22,7 @@ def find_matching_cif_files(root_dir):
                 for key in data_dict:
                     if name_without_ext.startswith(key):
                         energy = data_dict[key]
-                        full_file_path = os.path.join(subdir, file)
+                        full_file_path = os.path.abspath(os.path.join(subdir, file))
                         matching_cif_files.append((full_file_path, energy))
                         break
     return matching_cif_files
