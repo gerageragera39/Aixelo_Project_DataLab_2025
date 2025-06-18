@@ -1,0 +1,86 @@
+=========== MODEL EVALUATION REPORT ==========
+Generated: 2025-06-18 20:06:36
+
+1. BASELINE MODELS (no parameter tuning):
+
+--- RandomForest ---
+
+- MAE (Mean Absolute Error): 0.3082
+- MSE (Mean Squared Error): 0.4175
+- RMSE (Root Mean Squared Error): 0.6461
+- R² Score: 2.70%
+
+Sample predictions:
+
+  Predicted: -0.2876 | Actual: -0.2857
+  Predicted: -0.2855 | Actual: -0.3661
+  Predicted: -0.3022 | Actual: 0.2399
+  Predicted: -0.2502 | Actual: -0.5411
+  Predicted: -0.4246 | Actual: -0.4411
+
+
+--- ExtraTrees ---
+
+- MAE (Mean Absolute Error): 0.3071
+- MSE (Mean Squared Error): 0.4218
+- RMSE (Root Mean Squared Error): 0.6495
+- R² Score: 1.69%
+
+Sample predictions:
+
+  Predicted: -0.3672 | Actual: -0.5315
+  Predicted: 0.0195 | Actual: -0.4714
+  Predicted: -0.5946 | Actual: -0.4055
+  Predicted: -0.3159 | Actual: -0.2866
+  Predicted: -0.3551 | Actual: -0.4206
+
+
+--- Bagging ---
+
+- MAE (Mean Absolute Error): 0.3097
+- MSE (Mean Squared Error): 0.4266
+- RMSE (Root Mean Squared Error): 0.6531
+- R² Score: 0.58%
+
+Sample predictions:
+
+  Predicted: 0.1315 | Actual: 0.5432
+  Predicted: -0.1515 | Actual: -0.4692
+  Predicted: -0.4167 | Actual: -0.3084
+  Predicted: -0.2888 | Actual: -0.2976
+  Predicted: -0.0812 | Actual: -0.3779
+
+
+2. GRID SEARCH WITH PCA + EXTRA TREES:
+
+PCA was used to reduce input dimensions to 10.
+
+ExtraTreesRegressor was tuned via grid search.
+
+Best Parameters:
+
+  - reg: BaggingRegressor(n_estimators=100, random_state=42)
+
+
+Model performance:
+
+- MAE (Mean Absolute Error): 0.3187
+- MSE (Mean Squared Error): 0.4575
+- RMSE (Root Mean Squared Error): 0.6764
+- R² Score: -6.61%
+
+Sample predictions:
+
+  Predicted: -0.1229 | Actual: -0.4605
+  Predicted: -0.3759 | Actual: -0.3885
+  Predicted: -0.1207 | Actual: -0.3530
+  Predicted: -0.2508 | Actual: -0.2031
+  Predicted: -0.3297 | Actual: -0.2976
+
+
+=== SUMMARY ===
+
+All models were evaluated on the same validation set (20% of total data).
+Baseline models used default parameters.
+GridSearchCV improved performance by tuning parameters.
+PCA helped reduce feature space and may improve generalization.
