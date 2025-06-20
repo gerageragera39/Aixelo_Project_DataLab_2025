@@ -46,3 +46,5 @@ data/
 Thumbs.db
 
 src/fingerprints/matched_cifs_with_energy.csv
+
+src/training/split_odac/odac_*_fingerprints_*.csv
