@@ -63,7 +63,6 @@ def train_models(X_train, y_train, X_valid, y_valid, outcome):
     X_train_t = pipeline.fit_transform(X_train)
     X_valid_t = pipeline.transform(X_valid)
 
-    # === Базовые модели ===
     outcome.append("1. BASELINE MODELS (no parameter tuning):\n")
     for name, model in models.items():
         model.fit(X_train_t, y_train)
@@ -79,7 +78,6 @@ def train_models(X_train, y_train, X_valid, y_valid, outcome):
 
 
 def train_PCA(X_train, y_train, X_valid, y_valid, outcome):
-    # === PCA + GridSearch ===
     outcome.append("2. GRID SEARCH WITH PCA + EXTRA TREES:\n")
     pipe = Pipeline([
         ('imputer', SimpleImputer(strategy='constant', fill_value=0, keep_empty_features=True)),
@@ -90,16 +88,15 @@ def train_PCA(X_train, y_train, X_valid, y_valid, outcome):
         ('reg', ExtraTreesRegressor(n_estimators=100, random_state=42))
     ])
 
-    # Сетка параметров для GridSearchCV
     # param_grid_pca = {
-    #     'pca__n_components': [5, 8, 10, 12],          # кол-во компонент PCA
-    #     'reg__n_estimators': [100, 200, 300],         # кол-во деревьев
-    #     'reg__max_depth': [None, 10, 20, 30],         # максимальная глубина дерева
-    #     'reg__min_samples_split': [2, 5, 10],         # мин. число образцов для разбиения узла
-    #     'reg__min_samples_leaf': [1, 2, 4],           # мин. число образцов в листе
-    #     'reg__max_features': ['auto', 'sqrt', 0.5],   # количество признаков для каждого дерева
-    #     'reg__bootstrap': [True, False],               # использовать ли бутстрэп (выборки с возвращением)
-    #     'reg__max_samples': [None, 0.7],               # если bootstrap=True, часть выборки для бутстрэпа
+    #     'pca__n_components': [5, 8, 10, 12],
+    #     'reg__n_estimators': [100, 200, 300],
+    #     'reg__max_depth': [None, 10, 20, 30],
+    #     'reg__min_samples_split': [2, 5, 10],
+    #     'reg__min_samples_leaf': [1, 2, 4],
+    #     'reg__max_features': ['auto', 'sqrt', 0.5],
+    #     'reg__bootstrap': [True, False],
+    #     'reg__max_samples': [None, 0.7],
     # }
 
     param_grid_pca = {'reg': [
@@ -144,7 +141,6 @@ def train_script(path, output_file='model_report.txt'):
     report_lines = train_models(X_train, y_train, X_valid, y_valid, report_lines)
     report_lines = train_PCA(X_train, y_train, X_valid, y_valid, report_lines)
 
-    # === Общий вывод ===
     report_lines.append("=== SUMMARY ===\n")
     report_lines.append(
         "All models were evaluated on the same validation set (20% of total data).\n"
