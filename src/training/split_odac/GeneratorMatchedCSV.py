@@ -43,6 +43,7 @@ def enrich_with_energy_from_qmof(input_fp_path, energy_data_path):
     output_matched = os.path.join(base_dir, f'odac_{input_name_wo_ext}_with_qmof_energy_matched_only.csv')
 
     co2_df = pd.read_csv(input_fp_path)
+    co2_df = co2_df.drop(columns=['energy'])
     fsr_df = pd.read_csv(energy_data_path)
 
     co2_df["MOF_ID"] = co2_df["MOF"].apply(extract_mof_id)
@@ -50,12 +51,11 @@ def enrich_with_energy_from_qmof(input_fp_path, energy_data_path):
 
     merged_df = co2_df.merge(fsr_df[["MOF_ID", "E_PBE"]], on="MOF_ID", how="left")
 
-    # merged_df.to_csv(output_all, index=False)
-
-    matched_df = merged_df[merged_df["E_PBE"].notna()]
+    matched_df = merged_df[merged_df["E_PBE"].notna()].copy()
+    matched_df.drop(columns=["MOF_ID"], inplace=True)
+    matched_df.rename(columns={"E_PBE": "energy"}, inplace=True)
     matched_df.to_csv(output_matched, index=False)
 
-    # print(f"✅ Saved full: {output_all}")
     print(f"✅ Saved in: {output_matched}")
 
 
