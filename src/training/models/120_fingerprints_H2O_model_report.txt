@@ -1,54 +1,54 @@
 =========== MODEL EVALUATION REPORT ==========
-Generated: 2025-06-26 19:47:08
+Generated: 2025-06-26 22:56:10
 
 1. BASELINE MODELS (no parameter tuning):
 
 --- RandomForest ---
 
-- MAE (Mean Absolute Error): 0.2998
-- MSE (Mean Squared Error): 0.3905
-- RMSE (Root Mean Squared Error): 0.6249
-- R² Score: 7.27%
+- MAE (Mean Absolute Error): 0.3028
+- MSE (Mean Squared Error): 0.3956
+- RMSE (Root Mean Squared Error): 0.6290
+- R² Score: 6.04%
 
 Sample predictions:
 
-  Predicted: -0.3457 | Actual: -0.5093
-  Predicted: -0.3559 | Actual: -0.4173
-  Predicted: 0.0865 | Actual: -0.6597
-  Predicted: 0.2554 | Actual: 0.5119
-  Predicted: -0.1202 | Actual: -0.5165
+  Predicted: -0.4036 | Actual: -0.2214
+  Predicted: -0.3368 | Actual: -0.2944
+  Predicted: -0.2164 | Actual: -0.5362
+  Predicted: -0.2347 | Actual: -1.0181
+  Predicted: 0.4464 | Actual: 6.7276
 
 
 --- ExtraTrees ---
 
-- MAE (Mean Absolute Error): 0.3215
-- MSE (Mean Squared Error): 0.5082
-- RMSE (Root Mean Squared Error): 0.7129
-- R² Score: -20.70%
+- MAE (Mean Absolute Error): 0.3182
+- MSE (Mean Squared Error): 0.4864
+- RMSE (Root Mean Squared Error): 0.6975
+- R² Score: -15.53%
 
 Sample predictions:
 
-  Predicted: -0.1704 | Actual: -0.2129
-  Predicted: -0.3658 | Actual: -0.6417
-  Predicted: -0.2760 | Actual: -0.2164
-  Predicted: -0.3292 | Actual: -0.5862
-  Predicted: 0.2552 | Actual: -0.4536
+  Predicted: -0.3329 | Actual: -0.5131
+  Predicted: 1.2632 | Actual: -0.5803
+  Predicted: -0.4913 | Actual: 0.1127
+  Predicted: -0.4716 | Actual: -0.1718
+  Predicted: -0.1191 | Actual: -0.4447
 
 
 --- Bagging ---
 
-- MAE (Mean Absolute Error): 0.2984
-- MSE (Mean Squared Error): 0.3881
-- RMSE (Root Mean Squared Error): 0.6230
-- R² Score: 7.82%
+- MAE (Mean Absolute Error): 0.3000
+- MSE (Mean Squared Error): 0.3930
+- RMSE (Root Mean Squared Error): 0.6269
+- R² Score: 6.65%
 
 Sample predictions:
 
+  Predicted: -0.4822 | Actual: -0.6504
+  Predicted: -0.0637 | Actual: 0.3658
   Predicted: -0.2025 | Actual: -0.1682
-  Predicted: -0.3466 | Actual: -0.3574
-  Predicted: -0.5264 | Actual: -0.3154
-  Predicted: -0.4971 | Actual: -0.6235
-  Predicted: -0.2855 | Actual: -0.8406
+  Predicted: -0.3210 | Actual: -0.1054
+  Predicted: 0.6465 | Actual: -0.3917
 
 
 2. GRID SEARCH WITH PCA + EXTRA TREES:
@@ -71,11 +71,11 @@ Model performance:
 
 Sample predictions:
 
+  Predicted: -0.2759 | Actual: -0.2832
+  Predicted: -0.3747 | Actual: -0.4940
+  Predicted: -0.4590 | Actual: -0.1494
+  Predicted: -0.1994 | Actual: -0.4008
   Predicted: -0.0916 | Actual: -0.2990
-  Predicted: -0.2227 | Actual: -0.6039
-  Predicted: 0.8546 | Actual: -0.6657
-  Predicted: 0.2554 | Actual: 0.5119
-  Predicted: -0.4079 | Actual: -0.5393
 
 
 === SUMMARY ===
