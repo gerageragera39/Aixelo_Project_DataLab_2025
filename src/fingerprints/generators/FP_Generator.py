@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from ase.io import read
 import os
+
+from pymatgen.io.ase import AseAtomsAdaptor
 from scipy.stats.mstats import gmean
 from pymatgen.io import ase as pm_ase
 from matminer.featurizers.composition import Meredig
@@ -92,21 +94,82 @@ def generate_45_fingerprints(refcodes_path, xyz_path, name):
     df.to_csv(f'stoich45_fingerprints_{name}.csv', index=True)
 
 
+# def generate_120_fingerprints(refcodes_path, xyz_path, name):
+#     ase_mofs = read(xyz_path, index=':')
+#     refcodes = np.genfromtxt(refcodes_path, delimiter=',', dtype=str)
+#     adaptor = pm_ase.AseAtomsAdaptor()
+#     pm_mofs = [adaptor.get_structure(ase_mof) for ase_mof in ase_mofs]
+#
+#     featurizer = Meredig()
+#     features = featurizer.feature_labels()
+#     df = pd.DataFrame(columns=features)
+#
+#     for i, pm_mof in enumerate(pm_mofs):
+#         print('Generating fingerprint: ' + str(i))
+#         fingerprint = featurizer.featurize(pm_mof.composition)
+#         refcode = refcodes[i]
+#         df.loc[refcode, :] = fingerprint
+#
+#     df.index.name = 'MOF'
+#     df.to_csv(f'stoich120_fingerprints_{name}.csv', index=True)
+
 def generate_120_fingerprints(refcodes_path, xyz_path, name):
+    # Читаем MOF структуры из xyz
     ase_mofs = read(xyz_path, index=':')
+    # Читаем refcodes из файла
     refcodes = np.genfromtxt(refcodes_path, delimiter=',', dtype=str)
-    adaptor = pm_ase.AseAtomsAdaptor()
+
+    adaptor = AseAtomsAdaptor()
     pm_mofs = [adaptor.get_structure(ase_mof) for ase_mof in ase_mofs]
 
     featurizer = Meredig()
-    features = featurizer.feature_labels()
-    df = pd.DataFrame(columns=features)
+    all_features = featurizer.feature_labels()
+
+    # Твой список нужных признаков (можно скопировать из вопроса)
+    selected_features = [
+        "H fraction", "He fraction", "Li fraction", "Be fraction", "B fraction", "C fraction", "N fraction",
+        "O fraction", "F fraction", "Ne fraction",
+        "Na fraction", "Mg fraction", "Al fraction", "Si fraction", "P fraction", "S fraction", "Cl fraction",
+        "Ar fraction", "K fraction", "Ca fraction",
+        "Sc fraction", "Ti fraction", "V fraction", "Cr fraction", "Mn fraction", "Fe fraction", "Co fraction",
+        "Ni fraction", "Cu fraction", "Zn fraction",
+        "Ga fraction", "Ge fraction", "As fraction", "Se fraction", "Br fraction", "Kr fraction", "Rb fraction",
+        "Sr fraction", "Y fraction", "Zr fraction",
+        "Nb fraction", "Mo fraction", "Tc fraction", "Ru fraction", "Rh fraction", "Pd fraction", "Ag fraction",
+        "Cd fraction", "In fraction", "Sn fraction",
+        "Sb fraction", "Te fraction", "I fraction", "Xe fraction", "Cs fraction", "Ba fraction", "La fraction",
+        "Ce fraction", "Pr fraction", "Nd fraction",
+        "Pm fraction", "Sm fraction", "Eu fraction", "Gd fraction", "Tb fraction", "Dy fraction", "Ho fraction",
+        "Er fraction", "Tm fraction", "Yb fraction",
+        "Lu fraction", "Hf fraction", "Ta fraction", "W fraction", "Re fraction", "Os fraction", "Ir fraction",
+        "Pt fraction", "Au fraction", "Hg fraction",
+        "Tl fraction", "Pb fraction", "Bi fraction", "Po fraction", "At fraction", "Rn fraction", "Fr fraction",
+        "Ra fraction", "Ac fraction", "Th fraction",
+        "Pa fraction", "U fraction", "Np fraction", "Pu fraction", "Am fraction", "Cm fraction", "Bk fraction",
+        "Cf fraction", "Es fraction", "Fm fraction",
+        "Md fraction", "No fraction", "Lr fraction", "mean AtomicWeight", "mean Column", "mean Row", "range Number",
+        "mean Number", "range AtomicRadius",
+        "mean AtomicRadius", "range Electronegativity", "mean Electronegativity", "avg s valence electrons",
+        "avg p valence electrons", "avg d valence electrons",
+        "avg f valence electrons", "frac s valence electrons", "frac p valence electrons", "frac d valence electrons",
+        "frac f valence electrons"
+    ]
+
+    # Создаем DataFrame с нужными колонками
+    df = pd.DataFrame(columns=selected_features)
 
     for i, pm_mof in enumerate(pm_mofs):
-        print('Generating fingerprint: ' + str(i))
+        print(f'Generating fingerprint: {i}')
         fingerprint = featurizer.featurize(pm_mof.composition)
+
+        # Преобразуем в Series с индексами всех фич
+        fp_series = pd.Series(fingerprint, index=all_features)
+
+        # Оставляем только выбранные признаки (если их нет — NaN)
+        filtered_fp = fp_series[selected_features]
+
         refcode = refcodes[i]
-        df.loc[refcode, :] = fingerprint
+        df.loc[refcode, :] = filtered_fp
 
     df.index.name = 'MOF'
     df.to_csv(f'stoich120_fingerprints_{name}.csv', index=True)

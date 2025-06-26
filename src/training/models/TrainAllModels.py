@@ -9,19 +9,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from datetime import datetime
 
-FP_group_45 = '../../fingerprints/generators/45FP/45_fingerprints_grouped_avg_energy.csv'
-FP_group_120 = '../../fingerprints/generators/120FP/120_fingerprints_grouped_avg_energy.csv'
+FP_CO2_45 = '../../../ODAC_data/45_CO2_fingerprints.csv'
+FP_H2O_45 = '../../../ODAC_data/45_H2O_fingerprints.csv'
 
-FP_CO2_45 = '../split_odac/45_fingerprints_CO2.csv'
-FP_H2O_45 = '../split_odac/45_fingerprints_H2O.csv'
-
-FP_CO2_120 = '../split_odac/120_fingerprints_CO2.csv'
-FP_H2O_120 = '../split_odac/120_fingerprints_H2O.csv'
-
-MATCHED_CO2_45 = '../split_odac/odac_45_fingerprints_CO2_with_qmof_energy_matched_only.csv'
-MATCHED_CO2_120 = '../split_odac/odac_120_fingerprints_CO2_with_qmof_energy_matched_only.csv'
-MATCHED_H2O_45 = '../split_odac/odac_45_fingerprints_H2O_with_qmof_energy_matched_only.csv'
-MATCHED_H2O_120 = '../split_odac/odac_120_fingerprints_H2O_with_qmof_energy_matched_only.csv'
+FP_CO2_120 = '../../../ODAC_data/120_CO2_fingerprints.csv'
+FP_H2O_120 = '../../../ODAC_data/120_H2O_fingerprints.csv'
 
 models = {
     "RandomForest": RandomForestRegressor(n_estimators=100, random_state=42),
@@ -161,16 +153,7 @@ def train_script(path, output_file='model_report.txt'):
 
 
 if __name__ == '__main__':
-    train_script(FP_group_45, '45_fingerprints_model_report.txt')
-    train_script(FP_group_120, '120_fingerprints_model_report.txt')
     train_script(FP_CO2_45, '45_fingerprints_CO2_model_report.txt')
     train_script(FP_CO2_120, '120_fingerprints_CO2_model_report.txt')
     train_script(FP_H2O_45, '45_fingerprints_H2O_model_report.txt')
     train_script(FP_H2O_120, '120_fingerprints_H2O_model_report.txt')
-
-
-
-    train_script(MATCHED_CO2_45, 'MATCHED_CO2_45_model_report.txt')
-    train_script(MATCHED_CO2_120, 'MATCHED_CO2_120_model_report.txt')
-    train_script(MATCHED_H2O_45, 'MATCHED_H2O_45_model_report.txt')
-    train_script(MATCHED_H2O_120, 'MATCHED_H2O_120_model_report.txt')
