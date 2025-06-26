@@ -40,9 +40,6 @@ data/
 
 *.xyz
 
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb
 
 # System
 .DS_Store
