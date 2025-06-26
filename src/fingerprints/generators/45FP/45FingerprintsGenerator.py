@@ -1,7 +1,3 @@
-import os
-
-import pandas as pd
-
 from src.fingerprints.generators.FP_Generator import generate_45_fingerprints, add_evergy
 
 xyz_path_CO2 = '../mofs_CO2.xyz'

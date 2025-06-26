@@ -6,9 +6,8 @@ from scipy.stats.mstats import gmean
 from pymatgen.io import ase as pm_ase
 from matminer.featurizers.composition import Meredig
 
-tabulated_data_path = r'C:\Users\GED\PycharmProjects\Aixelo_Project_DataLab_2025\src\fingerprints\generators\tabulated_data'
-
-
+current_dir = os.path.dirname(os.path.abspath(__file__))
+tabulated_data_path = os.path.join(current_dir, 'tabulated_data')
 
 
 def get_stats(atomic_nums, tabulated_data):
@@ -70,7 +69,6 @@ def generate_45_fingerprints(refcodes_path, xyz_path, name):
 
     processed_indices = refcodes[:len(mofs)]
 
-    # Создаем DataFrame только с успешно обработанными данными
     df = pd.DataFrame(np.transpose(data), index=processed_indices)
 
     colnames = ['atomic_num_mean', 'atomic_num_geometric_mean', 'atomic_num_standard_deviation', 'atomic_num_max',
@@ -94,37 +92,31 @@ def generate_45_fingerprints(refcodes_path, xyz_path, name):
     df.to_csv(f'stoich45_fingerprints_{name}.csv', index=True)
 
 
-
 def generate_120_fingerprints(refcodes_path, xyz_path, name):
     ase_mofs = read(xyz_path, index=':')
     refcodes = np.genfromtxt(refcodes_path, delimiter=',', dtype=str)
     adaptor = pm_ase.AseAtomsAdaptor()
     pm_mofs = [adaptor.get_structure(ase_mof) for ase_mof in ase_mofs]
 
-    # Initialize feature object
     featurizer = Meredig()
     features = featurizer.feature_labels()
     df = pd.DataFrame(columns=features)
 
-    # Get features
     for i, pm_mof in enumerate(pm_mofs):
         print('Generating fingerprint: ' + str(i))
         fingerprint = featurizer.featurize(pm_mof.composition)
         refcode = refcodes[i]
         df.loc[refcode, :] = fingerprint
 
-    # Export features
     df.index.name = 'MOF'
     df.to_csv(f'stoich120_fingerprints_{name}.csv', index=True)
 
 
 def add_evergy(path1, path2, name):
-    df1 = pd.read_csv(path1)  # тот, где MOF
-    df2 = pd.read_csv(path2)  # тот, где file_path и energy
+    df1 = pd.read_csv(path1)
+    df2 = pd.read_csv(path2)
     df2['MOF'] = df2['file_path'].apply(lambda x: os.path.splitext(os.path.basename(x))[0])
 
-    # Теперь можно объединить по MOF
     df_merged = df1.merge(df2[['MOF', 'energy']], on='MOF', how='left')
 
-    # Сохраните результат
     df_merged.to_csv(f'merged_{name}.csv', index=False)
