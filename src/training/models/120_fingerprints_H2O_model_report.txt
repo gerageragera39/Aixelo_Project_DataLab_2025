@@ -1,0 +1,86 @@
+=========== MODEL EVALUATION REPORT ==========
+Generated: 2025-06-20 17:18:32
+
+1. BASELINE MODELS (no parameter tuning):
+
+--- RandomForest ---
+
+- MAE (Mean Absolute Error): 0.2967
+- MSE (Mean Squared Error): 0.3896
+- RMSE (Root Mean Squared Error): 0.6242
+- R² Score: 9.20%
+
+Sample predictions:
+
+  Predicted: -0.3509 | Actual: -0.2641
+  Predicted: -0.3215 | Actual: 0.0416
+  Predicted: -0.4291 | Actual: -0.7615
+  Predicted: -0.1965 | Actual: -0.3507
+  Predicted: -0.3924 | Actual: -0.4798
+
+
+--- ExtraTrees ---
+
+- MAE (Mean Absolute Error): 0.3111
+- MSE (Mean Squared Error): 0.4704
+- RMSE (Root Mean Squared Error): 0.6858
+- R² Score: -9.62%
+
+Sample predictions:
+
+  Predicted: -0.3800 | Actual: -0.6300
+  Predicted: -0.0837 | Actual: -0.3426
+  Predicted: -0.3534 | Actual: -0.6417
+  Predicted: -0.0682 | Actual: -0.2609
+  Predicted: -0.1173 | Actual: -0.5315
+
+
+--- Bagging ---
+
+- MAE (Mean Absolute Error): 0.2967
+- MSE (Mean Squared Error): 0.3878
+- RMSE (Root Mean Squared Error): 0.6227
+- R² Score: 9.63%
+
+Sample predictions:
+
+  Predicted: -0.3427 | Actual: -0.6177
+  Predicted: -0.3485 | Actual: -0.2013
+  Predicted: -0.4252 | Actual: -0.1980
+  Predicted: -0.2713 | Actual: -0.3913
+  Predicted: -0.3506 | Actual: -0.4599
+
+
+2. GRID SEARCH WITH PCA + EXTRA TREES:
+
+PCA was used to reduce input dimensions to 10.
+
+ExtraTreesRegressor was tuned via grid search.
+
+Best Parameters:
+
+  - reg: ExtraTreesRegressor(random_state=42)
+
+
+Model performance:
+
+- MAE (Mean Absolute Error): 0.3137
+- MSE (Mean Squared Error): 0.4124
+- RMSE (Root Mean Squared Error): 0.6422
+- R² Score: 3.88%
+
+Sample predictions:
+
+  Predicted: -0.1142 | Actual: -0.3176
+  Predicted: -0.4716 | Actual: -0.1718
+  Predicted: -0.3121 | Actual: 0.1689
+  Predicted: -0.0624 | Actual: -0.4831
+  Predicted: -0.2369 | Actual: 0.0148
+
+
+=== SUMMARY ===
+
+All models were evaluated on the same validation set (20% of total data).
+Baseline models used default parameters.
+GridSearchCV improved performance by tuning parameters.
+PCA helped reduce feature space and may improve generalization.

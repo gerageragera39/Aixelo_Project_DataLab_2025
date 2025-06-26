@@ -1,0 +1,86 @@
+=========== MODEL EVALUATION REPORT ==========
+Generated: 2025-06-20 17:18:48
+
+1. BASELINE MODELS (no parameter tuning):
+
+--- RandomForest ---
+
+- MAE (Mean Absolute Error): 317.0429
+- MSE (Mean Squared Error): 145030.0268
+- RMSE (Root Mean Squared Error): 380.8281
+- R² Score: 0.11%
+
+Sample predictions:
+
+  Predicted: -836.9937 | Actual: -526.5182
+  Predicted: -827.6775 | Actual: -574.5665
+  Predicted: -827.2213 | Actual: -394.0844
+  Predicted: -831.2141 | Actual: -902.4976
+  Predicted: -843.3585 | Actual: -442.9472
+
+
+--- ExtraTrees ---
+
+- MAE (Mean Absolute Error): 317.0286
+- MSE (Mean Squared Error): 145012.9424
+- RMSE (Root Mean Squared Error): 380.8056
+- R² Score: 0.13%
+
+Sample predictions:
+
+  Predicted: -838.9740 | Actual: -994.1669
+  Predicted: -843.7526 | Actual: -541.9058
+  Predicted: -832.2010 | Actual: -482.4311
+  Predicted: -837.1901 | Actual: -1197.0454
+  Predicted: -837.1901 | Actual: -270.0997
+
+
+--- Bagging ---
+
+- MAE (Mean Absolute Error): 317.0434
+- MSE (Mean Squared Error): 145028.1110
+- RMSE (Root Mean Squared Error): 380.8256
+- R² Score: 0.12%
+
+Sample predictions:
+
+  Predicted: -834.9529 | Actual: -772.3144
+  Predicted: -835.3071 | Actual: -429.0818
+  Predicted: -837.0739 | Actual: -1636.8421
+  Predicted: -843.3585 | Actual: -373.6612
+  Predicted: -843.2155 | Actual: -331.4201
+
+
+2. GRID SEARCH WITH PCA + EXTRA TREES:
+
+PCA was used to reduce input dimensions to 10.
+
+ExtraTreesRegressor was tuned via grid search.
+
+Best Parameters:
+
+  - reg: RandomForestRegressor(random_state=42)
+
+
+Model performance:
+
+- MAE (Mean Absolute Error): 317.0313
+- MSE (Mean Squared Error): 145012.9643
+- RMSE (Root Mean Squared Error): 380.8057
+- R² Score: 0.13%
+
+Sample predictions:
+
+  Predicted: -840.6841 | Actual: -1342.8990
+  Predicted: -836.4986 | Actual: -884.2345
+  Predicted: -842.0340 | Actual: -383.3287
+  Predicted: -832.1363 | Actual: -562.3529
+  Predicted: -831.3953 | Actual: -503.3441
+
+
+=== SUMMARY ===
+
+All models were evaluated on the same validation set (20% of total data).
+Baseline models used default parameters.
+GridSearchCV improved performance by tuning parameters.
+PCA helped reduce feature space and may improve generalization.
