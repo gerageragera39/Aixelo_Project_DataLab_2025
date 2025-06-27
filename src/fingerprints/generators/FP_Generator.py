@@ -5,7 +5,6 @@ import os
 
 from pymatgen.io.ase import AseAtomsAdaptor
 from scipy.stats.mstats import gmean
-from pymatgen.io import ase as pm_ase
 from matminer.featurizers.composition import Meredig
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -94,29 +93,8 @@ def generate_45_fingerprints(refcodes_path, xyz_path, name):
     df.to_csv(f'stoich45_fingerprints_{name}.csv', index=True)
 
 
-# def generate_120_fingerprints(refcodes_path, xyz_path, name):
-#     ase_mofs = read(xyz_path, index=':')
-#     refcodes = np.genfromtxt(refcodes_path, delimiter=',', dtype=str)
-#     adaptor = pm_ase.AseAtomsAdaptor()
-#     pm_mofs = [adaptor.get_structure(ase_mof) for ase_mof in ase_mofs]
-#
-#     featurizer = Meredig()
-#     features = featurizer.feature_labels()
-#     df = pd.DataFrame(columns=features)
-#
-#     for i, pm_mof in enumerate(pm_mofs):
-#         print('Generating fingerprint: ' + str(i))
-#         fingerprint = featurizer.featurize(pm_mof.composition)
-#         refcode = refcodes[i]
-#         df.loc[refcode, :] = fingerprint
-#
-#     df.index.name = 'MOF'
-#     df.to_csv(f'stoich120_fingerprints_{name}.csv', index=True)
-
 def generate_120_fingerprints(refcodes_path, xyz_path, name):
-    # Читаем MOF структуры из xyz
     ase_mofs = read(xyz_path, index=':')
-    # Читаем refcodes из файла
     refcodes = np.genfromtxt(refcodes_path, delimiter=',', dtype=str)
 
     adaptor = AseAtomsAdaptor()
@@ -125,7 +103,6 @@ def generate_120_fingerprints(refcodes_path, xyz_path, name):
     featurizer = Meredig()
     all_features = featurizer.feature_labels()
 
-    # Твой список нужных признаков (можно скопировать из вопроса)
     selected_features = [
         "H fraction", "He fraction", "Li fraction", "Be fraction", "B fraction", "C fraction", "N fraction",
         "O fraction", "F fraction", "Ne fraction",
@@ -155,17 +132,14 @@ def generate_120_fingerprints(refcodes_path, xyz_path, name):
         "frac f valence electrons"
     ]
 
-    # Создаем DataFrame с нужными колонками
     df = pd.DataFrame(columns=selected_features)
 
     for i, pm_mof in enumerate(pm_mofs):
         print(f'Generating fingerprint: {i}')
         fingerprint = featurizer.featurize(pm_mof.composition)
 
-        # Преобразуем в Series с индексами всех фич
         fp_series = pd.Series(fingerprint, index=all_features)
 
-        # Оставляем только выбранные признаки (если их нет — NaN)
         filtered_fp = fp_series[selected_features]
 
         refcode = refcodes[i]
